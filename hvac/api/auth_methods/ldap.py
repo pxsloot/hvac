@@ -27,6 +27,7 @@ class Ldap(VaultApiBase):
         bind_dn=None,
         bind_pass=None,
         user_attr=None,
+        user_filter=None,
         discover_dn=None,
         deny_null_bind=True,
         upn_domain=None,
@@ -74,6 +75,9 @@ class Ldap(VaultApiBase):
         :param user_attr: Attribute on user attribute object matching the username passed when authenticating. Examples:
             sAMAccountName, cn, uid
         :type user_attr: str | unicode
+        :param user_filter: An optional LDAP user search filter. The template can access the following context
+            variables: UserAttr, Username. The default is ({{.UserAttr}}={{.Username}})
+        :type user_filter: str | unicode
         :param discover_dn: Use anonymous bind to discover the bind DN of a user.
         :type discover_dn: bool
         :param deny_null_bind: This option prevents users from bypassing authentication when providing an empty password.
@@ -116,6 +120,7 @@ class Ldap(VaultApiBase):
                 "insecure_tls": insecure_tls,
                 "certificate": certificate,
                 "userattr": user_attr,
+                "userfilter": user_filter,
                 "discoverdn": discover_dn,
                 "deny_null_bind": deny_null_bind,
                 "groupfilter": group_filter,
